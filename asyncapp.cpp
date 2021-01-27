@@ -134,6 +134,7 @@ void synchronous() {
         ss.peername = strdup(hp->name);
         ss.community = (u_char *) "public";
         ss.community_len = strlen("public");
+        ss.timeout = 50000;
         if (!(sp = snmp_open(&ss))) {
             snmp_perror("snmp_open");
             continue;
@@ -209,6 +210,7 @@ void asynchronous() {
         sess.peername = strdup(hp->name);
         sess.community = (u_char *) "public";
         sess.community_len = strlen("public");
+        sess.timeout = 50000;
         sess.callback = asynch_response;        /* default callback */
         sess.callback_magic = hs;
         if (!(hs->sess = snmp_open(&sess))) {
