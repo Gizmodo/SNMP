@@ -19,6 +19,8 @@ set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED OFF)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost COMPONENTS thread log log_setup system  date_time  chrono REQUIRED)
+find_package(rxcpp CONFIG)
+
 if (Boost_FOUND)
 
     message(STATUS "Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
@@ -64,5 +66,12 @@ target_link_libraries(asyncapp
         /usr/local/lib/libboost_system.a
         /usr/local/lib/libboost_thread.a
         /usr/local/lib/libboost_log.a
+        /usr/local/lib/libnetsnmp.so
+        )
+
+project(snmpmanager)
+add_executable(snmpanager SnmpManager/mainSnmpManager.cpp SnmpManager/Manager.cpp SnmpManager/Manager.h SnmpManager/Host.h)
+set_target_properties(snmpanager PROPERTIES OUTPUT_NAME "snmpanager")
+target_link_libraries(snmpanager
         /usr/local/lib/libnetsnmp.so
         )
