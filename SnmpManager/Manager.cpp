@@ -57,9 +57,8 @@ void Manager::init_sessions() {
 
         snmp_sess_init(&session);
         session.peername = const_cast<char *>(h->ip.c_str());
-        session.retries = 2;
-        session.timeout = 10000000;
-        session.remote_port = 161;
+        session.retries = 1;
+        session.timeout = 10000;
         session.version = SNMP_VERSION_2c;
         session.community = (u_char *) strdup("public");
         session.community_len = strlen("public");
@@ -114,13 +113,13 @@ void Manager::run() {
         return;
     }
     init_sessions();
-    //std::thread t([&](){
-    while (m_running) {
-        asyn_send();
+    std::thread t([&](){
+    //while (m_running) {
+       // asyn_send();
         wait_request();
-        sleep(m_loopInterval);
-    }
-    //});
+       // sleep(m_loopInterval);
+    //}
+    });
 
 }
 
@@ -128,6 +127,6 @@ void Manager::stop() {
 
 }
 
-void Manager::set_func(std::function<bool(Host, snmp_pdu *)> f) {
+void Manager::set_func(std::function<void(Host, snmp_pdu *)> f) {
     m_handleFunc = f;
 }

@@ -35,11 +35,19 @@ struct host {
 } hosts[] = {
         {"192.168.88.1"},
         {"153.19.67.9"},
-        {"192.168.88.1"},
         {"192.168.88.251"},
         {"169.237.117.47"},
         {"183.108.188.25"},
         {"58.137.51.68"},
+        {"103.210.24.244"},
+        {"103.210.24.244"},
+        {"103.210.24.244"},
+        {"103.210.24.244"},
+        {"103.210.24.244"},
+        {"103.210.24.244"},
+        {"103.210.24.244"},
+        {"103.210.24.244"},
+        {"103.210.24.244"},
         {"103.210.24.244"},
         {"107.211.249.156"},
         {"115.160.56.153"},
@@ -59,7 +67,7 @@ struct oidStruct {
     oid Oid[MAX_OID_LEN];
     int OidLen;
 } oids[] = {
-        {"1.3.6.1.2.1.1.1.0"},
+        {".1.3.6.1.2.1.1.1.0"},
         {".1.3.6.1.2.1.1.6.0"},
         {".1.3.6.1.2.1.25.3.2.1.3.1"},
         {".1.3.6.1.2.1.43.5.1.1.17.1"},
@@ -213,7 +221,6 @@ void asynchronous() {
     struct host *hp;
 
     /* startup all hosts */
-
     for (hs = sessions, hp = hosts; hp->name; hs++, hp++) {
         struct snmp_pdu *req;
         struct snmp_session sess{};
@@ -268,7 +275,7 @@ void asynchronous() {
 }
 
 /*****************************************************************************/
-int main()
+int mainrx()
 {
     random_device rd;   // non-deterministic generator
     mt19937 gen(rd());
@@ -349,11 +356,11 @@ int main()
 
     return 0;
 }
-int main1(int argc, char **argv) {
+int main(int argc, char **argv) {
     initialize();
 
-    printf("---------- synchronous -----------\n");
-    synchronous();
+    //printf("---------- synchronous -----------\n");
+    //synchronous();
 
     printf("---------- asynchronous -----------\n");
     asynchronous();

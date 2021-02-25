@@ -15,7 +15,7 @@ public:
 
     ~Manager();
 
-    void set_func(std::function<bool(Host, snmp_pdu *)> f);
+    void set_func(std::function<void(Host, snmp_pdu *)> f);
 
     void run();
 
@@ -38,7 +38,7 @@ private:
 
 private:
     std::vector<Host *> m_hosts;
-    std::function<bool(Host, snmp_pdu *)> m_handleFunc;
+    std::function<void(Host, snmp_pdu *)> m_handleFunc;
     bool m_running;
     uint32_t m_sendCount;
     uint32_t m_loopInterval;

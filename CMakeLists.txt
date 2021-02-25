@@ -75,3 +75,11 @@ set_target_properties(snmpanager PROPERTIES OUTPUT_NAME "snmpanager")
 target_link_libraries(snmpanager
         /usr/local/lib/libnetsnmp.so
         )
+
+
+project(develop)
+add_executable(develop Develop/main.cpp)
+set_target_properties(develop PROPERTIES OUTPUT_NAME "develop")
+target_link_libraries(develop
+        /usr/local/lib/libnetsnmp.so
+        )

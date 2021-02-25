@@ -3,7 +3,7 @@
 #include <iostream>
 
 using namespace std;
-
+vector<std::string> IPs;
 const char *hosts[3] = {
         "192.168.6.1",
         "192.168.88.1",
@@ -18,7 +18,7 @@ const char *oids[4] = {
 
 void print_result(int status, struct snmp_session *sp, struct snmp_pdu *pdu);
 
-bool test(Host h, snmp_pdu *p) {
+void test(Host h, snmp_pdu *p) {
     cout << " test called" << endl;
     print_result(STAT_SUCCESS, h.pSession, p);
 }
@@ -39,16 +39,29 @@ void print_result(int status, struct snmp_session *sp, struct snmp_pdu *pdu) {
     }
 }
 
-int main() {
-    Manager m;
+void initIP(bool devMode) {
+    if (devMode) {
+        IPs.push_back("153.19.67.9");
+    } else {
+        for (int i = 0; i < 190; ++i) {
+            for (int j = 0; j < 255; ++j) {
+                IPs.push_back("10.159." + std::to_string(i) + "." + std::to_string(j));
+            }
+        }
+    }
+}
 
+int main() {
+    initIP(true);
+    Manager m;
+    m.set_interval(3);
     SOCK_STARTUP;
     init_snmp("snmpapp");
-
-    for (int i = 0; i < 2; i++) {
+    for (auto ip:IPs) {
+        //for (int i = 0; i < 2; i++) {
         Host *h = new Host();;
-        h->hostName = "Host" + std::to_string(i);
-        h->ip = std::string(hosts[i]);
+        // h->hostName = "Host" + std::to_string(i);
+        h->ip = ip;
         h->pSession = nullptr;
         h->listOid.clear();
         for (int j = 0; j < 4; j++) {
@@ -65,5 +78,5 @@ int main() {
 
     m.set_func(test);
     m.run();
-    while (1);
+    //while (1);
 }

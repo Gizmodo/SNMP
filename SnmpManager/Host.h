@@ -16,7 +16,7 @@ struct cc_oid {
 
 class Host {
 public:
-    std::string hostName;       //NICKNAME
+  //  std::string hostName;       //NICKNAME
     std::string ip;             //IP
     struct snmp_session *pSession;
     std::vector<cc_oid> listOid;
